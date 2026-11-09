@@ -303,20 +303,23 @@
 
     <div class="meta-pills">
       <div class="pill">✓ 100% Fixed Pitch (1228 units)</div>
+      <div class="pill">✓ Programming Ligatures (calt: -> => === !== <= >= <!--)</div>
       <div class="pill">✓ Latin-2 (Hungarian, Polish, Czech, Slovak, Romanian)</div>
       <div class="pill">✓ Regular 400 &amp; Bold 700</div>
       <div class="pill">✓ Continuous Underscores (___)</div>
       <div class="pill">✓ Zero-Gap Box Drawing (┌─┐)</div>
-      <div class="pill">✓ Desktop TTF &amp; Webfont WOFF2 (~41 KB)</div>
+      <div class="pill">✓ Desktop TTF &amp; Webfont WOFF2 (~41-56 KB)</div>
     </div>
 
     <!-- Controls Panel -->
     <div class="controls-panel">
       <div class="control-group">
         <span class="control-label">Variant</span>
-        <div style="display: flex; gap: 0.5rem;">
-          <button id="btnVarStd" class="btn-toggle active" onclick="setVariant('standard')">PiCode Mono</button>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button id="btnVarStd" class="btn-toggle" onclick="setVariant('standard')">PiCode Mono</button>
           <button id="btnVarLatin2" class="btn-toggle" onclick="setVariant('latin2')">PiCode Mono Latin2</button>
+          <button id="btnVarLiga" class="btn-toggle active" onclick="setVariant('liga')">PiCode Mono Liga</button>
+          <button id="btnVarLigaLatin2" class="btn-toggle" onclick="setVariant('liga-latin2')">PiCode Mono Liga Latin2</button>
         </div>
       </div>
 
@@ -385,6 +388,34 @@ func (gw *EdgeGateway) EllenőrizKérést(ügyfél_ip string, kérés_adat []byt
     return false, "ENGEDÉLYEZVE: Tiszta hálózati forgalom átengedve."
 }
       </textarea>
+    </div>
+
+    <!-- Programming Ligatures Showcase -->
+    <div class="card-block">
+      <div class="card-header">
+        <div class="card-title">
+          <span class="dot" style="background: var(--accent-magenta);"></span> PROGRAMMING LIGATURES SHOWCASE (CALT)
+        </div>
+        <span>FIRA-CODE ENGINE • ZERO GRID SHIFT</span>
+      </div>
+      <div class="code-container" style="font-size: 16px; font-feature-settings: 'calt' 1, 'liga' 1;">
+<span class="kw">// 1. Arrows &amp; Lambdas:</span>
+-&gt;  --&gt;  -&gt;&gt;  -&gt;|  &lt;-  &lt;--  &lt;&lt;-  |&lt;-  =&gt;  ==&gt;  =&gt;&gt;  &lt;=  &lt;==  &lt;=&gt;
+
+<span class="kw">// 2. Equality, Identity &amp; Comparison Operators:</span>
+===  !==  ==  !=  /=  &lt;=  &gt;=  =:=  :=  ::=  &lt;&gt;
+
+<span class="kw">// 3. Web, XML, HTML &amp; Markdown Syntax:</span>
+&lt;!-- HTML Comment --&gt;   &lt;/   /&gt;   &lt;/&gt;   &lt;?   ?&gt;   /* Multi-line Comment */   /** DocBlock */   /// LineDoc
+
+<span class="kw">// 4. Logical, Bitwise, Ranges &amp; Nullish Coalescing:</span>
+&amp;&amp;   ||   ||=   &amp;&amp;=   ::   :::   ..   ...   ..&lt;   ??   ?:   ??=   |&gt;   &lt;|
+
+<span class="kw">// 5. Live code expression with ligatures:</span>
+<span class="str">const</span> filterStream = (items) =&gt; items
+    .filter(x =&gt; x.status === <span class="str">'ready'</span> &amp;&amp; x.attempts &lt;= 3)
+    .map(x =&gt; x.payload?.id ?? <span class="str">'N/A'</span>);
+      </div>
     </div>
 
     <!-- Central European / Latin-2 Showcase -->
@@ -498,7 +529,7 @@ func (gw *EdgeGateway) EllenőrizKérést(ügyfél_ip string, kérés_adat []byt
             <div>PiCodeMono-Latin2-Regular.ttf</div>
             <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Desktop Font (Regular 400)</div>
           </div>
-          <span class="badge">TTF 118 KB</span>
+          <span class="badge">TTF 109 KB</span>
         </a>
 
         <a href="fonts/PiCodeMono-Latin2-Bold.ttf" download class="dl-btn latin2">
@@ -506,7 +537,7 @@ func (gw *EdgeGateway) EllenőrizKérést(ügyfél_ip string, kérés_adat []byt
             <div>PiCodeMono-Latin2-Bold.ttf</div>
             <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Desktop Bold Font (Bold 700)</div>
           </div>
-          <span class="badge">TTF 119 KB</span>
+          <span class="badge">TTF 110 KB</span>
         </a>
 
         <a href="fonts/PiCodeMono-Latin2-Regular.woff2" download class="dl-btn latin2">
@@ -514,7 +545,7 @@ func (gw *EdgeGateway) EllenőrizKérést(ügyfél_ip string, kérés_adat []byt
             <div>PiCodeMono-Latin2-Regular.woff2</div>
             <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Webfont Regular</div>
           </div>
-          <span class="badge">WOFF2 41 KB</span>
+          <span class="badge">WOFF2 42 KB</span>
         </a>
 
         <a href="fonts/PiCodeMono-Latin2-Bold.woff2" download class="dl-btn latin2">
@@ -526,14 +557,52 @@ func (gw *EdgeGateway) EllenőrizKérést(ügyfél_ip string, kérés_adat []byt
         </a>
       </div>
 
+      <h3 style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--accent-magenta); margin-top: 2rem; margin-bottom: 0.5rem;">
+        3. PiCode Mono Liga &amp; Liga Latin2 (Ligaturized Developer Editions):
+      </h3>
+      <div class="download-grid">
+        <a href="fonts/PiCodeMonoLiga-Regular.ttf" download class="dl-btn" style="border-color: rgba(255, 0, 128, 0.4);">
+          <div>
+            <div>PiCodeMonoLiga-Regular.ttf</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Desktop Ligatures Regular</div>
+          </div>
+          <span class="badge" style="background: rgba(255, 0, 128, 0.2); color: var(--accent-magenta); border-color: var(--accent-magenta);">TTF 152 KB</span>
+        </a>
+
+        <a href="fonts/PiCodeMonoLiga-Bold.ttf" download class="dl-btn" style="border-color: rgba(255, 0, 128, 0.4);">
+          <div>
+            <div>PiCodeMonoLiga-Bold.ttf</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Desktop Ligatures Bold</div>
+          </div>
+          <span class="badge" style="background: rgba(255, 0, 128, 0.2); color: var(--accent-magenta); border-color: var(--accent-magenta);">TTF 153 KB</span>
+        </a>
+
+        <a href="fonts/PiCodeMonoLiga-Regular.woff2" download class="dl-btn" style="border-color: rgba(255, 0, 128, 0.4);">
+          <div>
+            <div>PiCodeMonoLiga-Regular.woff2</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Webfont Ligatures Regular</div>
+          </div>
+          <span class="badge" style="background: rgba(255, 0, 128, 0.2); color: var(--accent-magenta); border-color: var(--accent-magenta);">WOFF2 56 KB</span>
+        </a>
+
+        <a href="fonts/PiCodeMonoLiga-Latin2-Regular.woff2" download class="dl-btn" style="border-color: rgba(255, 0, 128, 0.4);">
+          <div>
+            <div>PiCodeMonoLiga-Latin2-Regular.woff2</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Webfont Ligatures Latin2</div>
+          </div>
+          <span class="badge" style="background: rgba(255, 0, 128, 0.2); color: var(--accent-magenta); border-color: var(--accent-magenta);">WOFF2 56 KB</span>
+        </a>
+      </div>
+
       <div style="margin-top: 2rem;">
         <h3 style="font-family: var(--font-mono); font-size: 1rem; color: var(--accent-cyan); margin-bottom: 0.75rem;">
           VS Code / Cursor Configuration:
         </h3>
         <div style="background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; border: 1px solid var(--card-border);">
-          "editor.fontFamily": "'PiCode Mono Latin2', 'PiCode Mono', monospace",<br>
+          "editor.fontFamily": "'PiCode Mono Liga Latin2', 'PiCode Mono Liga', 'PiCode Mono', monospace",<br>
           "editor.fontSize": 15,<br>
-          "editor.lineHeight": 1.6
+          "editor.lineHeight": 1.6,<br>
+          "editor.fontLigatures": true
         </div>
       </div>
     </div>
@@ -542,17 +611,26 @@ func (gw *EdgeGateway) EllenőrizKérést(ügyfél_ip string, kérés_adat []byt
 
   <script>
     const playground = document.getElementById('playground');
-    let currentVariant = 'standard';
+    let currentVariant = 'liga';
     let isCompared = false;
 
     function setVariant(variant) {
       currentVariant = variant;
       document.getElementById('btnVarStd').classList.toggle('active', variant === 'standard');
       document.getElementById('btnVarLatin2').classList.toggle('active', variant === 'latin2');
+      document.getElementById('btnVarLiga').classList.toggle('active', variant === 'liga');
+      document.getElementById('btnVarLigaLatin2').classList.toggle('active', variant === 'liga-latin2');
+      
       if (!isCompared) {
-        playground.style.fontFamily = variant === 'latin2' 
-          ? "'PiCode Mono Latin2', 'PiCode Mono', monospace" 
-          : "'PiCode Mono', monospace";
+        if (variant === 'liga-latin2') {
+          playground.style.fontFamily = "'PiCode Mono Liga Latin2', 'PiCode Mono Latin2', monospace";
+        } else if (variant === 'liga') {
+          playground.style.fontFamily = "'PiCode Mono Liga', 'PiCode Mono', monospace";
+        } else if (variant === 'latin2') {
+          playground.style.fontFamily = "'PiCode Mono Latin2', 'PiCode Mono', monospace";
+        } else {
+          playground.style.fontFamily = "'PiCode Mono', monospace";
+        }
       }
     }
 
@@ -580,13 +658,14 @@ func (gw *EdgeGateway) EllenőrizKérést(ügyfél_ip string, kérés_adat []byt
         btn.innerText = 'Switch Back to PiCode Mono';
         btn.classList.add('active');
       } else {
-        playground.style.fontFamily = currentVariant === 'latin2'
-          ? "'PiCode Mono Latin2', 'PiCode Mono', monospace"
-          : "'PiCode Mono', monospace";
+        setVariant(currentVariant);
         btn.innerText = 'Compare with Courier';
         btn.classList.remove('active');
       }
     }
+
+    // Initialize with ligatures enabled
+    setVariant('liga');
 
     // Populate Glyph Grid including Latin-2 characters
     const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=[]{}|;:\'",.<>/?`~\\┌─┐└┘├┤┬┴┼' + 
@@ -597,6 +676,7 @@ func (gw *EdgeGateway) EllenőrizKérést(ügyfél_ip string, kérés_adat []byt
       cell.className = 'glyph-cell';
       cell.innerHTML = `<span>${c}</span><span class="glyph-code">U+${c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')}</span>`;
       grid.appendChild(cell);
+    }
     }
   </script>
 </body>

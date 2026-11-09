@@ -319,3 +319,62 @@ print('✓ Font validation passed 100%!')
 1. **VS Code / Cursor**: Add `'MyCode Mono', monospace` to `editor.fontFamily`.
 2. **Terminal**: Install TTF in system Font Book, select in Terminal profiles.
 3. **Web**: Load via `@font-face` and inspect in Chrome DevTools via `document.fonts.check()`.
+
+---
+
+## 11. Programming Ligature Architecture (`ligaturize.py`)
+
+A premier requirement for contemporary developer typefaces is support for **programming ligatures**—visual replacements that render multi-character syntax tokens (such as `->`, `=>`, `===`, `!==`, `<=`, `>=`, `<!--`, `-->`, `::`, `:=`) as single, beautifully connected symbolic glyphs.
+
+The PiLAB Ligaturizer ([`ligaturize.py`](../ligaturize.py)) implements an OpenType `calt` (*Contextual Alternates*) injection pipeline.
+
+### 11.1 The Multi-Cell Contextual Alternates Mechanism
+
+In fixed-pitch fonts, characters cannot simply be replaced by a single wide glyph because the text layout engine would lose track of character positions and cursor movements. If a cursor is placed inside `===`, the terminal or editor must still navigate three discrete character cells.
+
+To preserve strict fixed-pitch cursor alignment, the pipeline uses a **multi-cell replacement protocol**:
+
+1. **Intermediate Cells (`CR.*`)**:
+   - The initial characters in the sequence are substituted with specialized non-spacing or space-holding glyphs that share the exact cell advance width ($1228$ units).
+2. **Terminal Cell (`lig.*`)**:
+   - The final character in the sequence is substituted with a wide composite glyph that carries the complete visual representation of the connected ligature.
+   - It utilizes negative left side bearings ($lsb < 0$) to draw backwards across all preceding cells in the sequence without changing the layout engine's advance cursor position.
+
+```
+Input Tokens:      [ = ]          [ = ]          [ = ]
+Cell Metrics:    (adv: 1228)    (adv: 1228)    (adv: 1228)
+Substitution:     [CR.1.0]       [CR.1.0]       [lig.1]
+Visual Draw:        |              |         <--- Draws across all 3 cells
+```
+
+### 11.2 Horizontal Scaling of Ligature Outlines
+
+Ligature donors (e.g. Fira Code) may use an advance width different from the target font ($W_{\text{donor}} = 1116$ vs $W_{\text{target}} = 1228$).
+
+The pipeline calculates the exact horizontal scale factor:
+
+$$s_x = \frac{W_{\text{target}}}{W_{\text{donor}}} = \frac{1228}{1116} \approx 1.10036$$
+
+Every ligature glyph's quadratic Bézier outline is scaled horizontally and its left side bearing is adjusted:
+
+$$\text{lsb}_{\text{target}} = \text{round}(\text{lsb}_{\text{donor}} \times s_x)$$
+
+$$\text{adv}_{\text{target}} = W_{\text{target}} = 1228$$
+
+This guarantees that two-character ligatures span exactly $2 \times 1228 = 2456$ units, three-character ligatures span $3684$ units, and four-character ligatures span $4912$ units with zero visual seams or gaps.
+
+### 11.3 CLI Usage of the Ligaturizer
+
+```bash
+# Ligaturize all 4 PiCode Mono fonts (Regular, Bold, Latin-2 Regular, Latin-2 Bold):
+python3 ligaturize.py --all
+
+# Or ligaturize an individual monospace font:
+python3 ligaturize.py \
+  --base fonts/MyFont-Regular.ttf \
+  --donor path/to/donor.ttf \
+  --output-ttf fonts/MyFontLiga-Regular.ttf \
+  --output-woff2 fonts/MyFontLiga-Regular.woff2 \
+  --suffix "Liga"
+```
+

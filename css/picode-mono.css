@@ -1,12 +1,13 @@
 /**
- * PiCode Mono & PiCode Mono Latin2 — Monospaced Developer Programming Font
+ * PiCode Mono, PiCode Mono Latin2 & Liga Editions — Monospaced Developer Programming Font
  * Engineered by Progressive Innovation LAB (PiLAB)
+ * https://pilab.hu
  *
  * Webfont CSS Bundle
  */
 
 /* ==========================================================================
-   PiCode Mono — Default Family
+   PiCode Mono — Default Fixed-Pitch Family
    ========================================================================== */
 
 @font-face {
@@ -50,6 +51,50 @@
 }
 
 /* ==========================================================================
+   PiCode Mono Liga — Ligaturized Developer Family (calt / programming ligatures)
+   ========================================================================== */
+
+@font-face {
+  font-family: 'PiCode Mono Liga';
+  src: url('../fonts/PiCodeMonoLiga-Regular.woff2') format('woff2'),
+       url('../fonts/PiCodeMonoLiga-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PiCode Mono Liga';
+  src: url('../fonts/PiCodeMonoLiga-Bold.woff2') format('woff2'),
+       url('../fonts/PiCodeMonoLiga-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   PiCode Mono Liga Latin2 — Ligaturized Latin-2 Family
+   ========================================================================== */
+
+@font-face {
+  font-family: 'PiCode Mono Liga Latin2';
+  src: url('../fonts/PiCodeMonoLiga-Latin2-Regular.woff2') format('woff2'),
+       url('../fonts/PiCodeMonoLiga-Latin2-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PiCode Mono Liga Latin2';
+  src: url('../fonts/PiCodeMonoLiga-Latin2-Bold.woff2') format('woff2'),
+       url('../fonts/PiCodeMonoLiga-Latin2-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================
    Unicode-Range Fallback (Optional Progressive Loading for Latin Extended)
    ========================================================================== */
 
@@ -76,13 +121,25 @@
    ========================================================================== */
 
 .font-picode-mono {
-  font-family: 'PiCode Mono', 'Courier New', monospace;
+  font-family: 'PiCode Mono', monospace;
   font-feature-settings: 'calt' 1, 'liga' 1;
   text-rendering: optimizeLegibility;
 }
 
 .font-picode-mono-latin2 {
-  font-family: 'PiCode Mono Latin2', 'PiCode Mono', 'Courier New', monospace;
+  font-family: 'PiCode Mono Latin2', 'PiCode Mono', monospace;
+  font-feature-settings: 'calt' 1, 'liga' 1;
+  text-rendering: optimizeLegibility;
+}
+
+.font-picode-mono-liga {
+  font-family: 'PiCode Mono Liga', 'PiCode Mono', monospace;
+  font-feature-settings: 'calt' 1, 'liga' 1;
+  text-rendering: optimizeLegibility;
+}
+
+.font-picode-mono-liga-latin2 {
+  font-family: 'PiCode Mono Liga Latin2', 'PiCode Mono Latin2', 'PiCode Mono', monospace;
   font-feature-settings: 'calt' 1, 'liga' 1;
   text-rendering: optimizeLegibility;
 }
