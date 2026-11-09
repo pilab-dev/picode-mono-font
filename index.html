@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PiCode Mono &amp; Latin2 — Monospaced Developer Programming Font</title>
+  <link rel="stylesheet" href="css/picode-mono.css">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --accent-cyan: #00f0ff;
+      --accent-green: #00ff88;
+      --accent-yellow: #ffb800;
+      --accent-magenta: #ff007f;
+      --accent-orange: #ff7700;
+      --text: #e2e8f0;
+      --text-dim: #94a3b8;
+      --font-mono: 'PiCode Mono', 'Courier New', monospace;
+      --font-latin2: 'PiCode Mono Latin2', 'PiCode Mono', 'Courier New', monospace;
+      --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-system);
+      line-height: 1.6;
+      padding-bottom: 4rem;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    .header-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border: 1px solid var(--accent-cyan);
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+      text-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-dim);
+      max-width: 850px;
+      margin-bottom: 2rem;
+    }
+
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      padding: 0.35rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--accent-green);
+    }
+
+    /* Controls Bar */
+    .controls-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .control-label {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-toggle {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 0.4rem 0.9rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle.active {
+      background: var(--accent-cyan);
+      color: #000;
+      border-color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    input[type="range"] {
+      accent-color: var(--accent-cyan);
+      cursor: pointer;
+    }
+
+    /* Section Cards */
+    .card-block {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .card-title {
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      display: inline-block;
+    }
+
+    /* Live Playground Area */
+    .interactive-textarea {
+      width: 100%;
+      min-height: 230px;
+      background: transparent;
+      color: var(--text);
+      border: none;
+      padding: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 18px;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+      white-space: pre;
+    }
+
+    /* Code Snippets */
+    .code-container {
+      padding: 1.25rem;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    /* Syntax Highlighting */
+    .kw { color: #ff7b72; font-weight: bold; }
+    .fn { color: #d2a8ff; }
+    .str { color: #a5d6ff; }
+    .num { color: #79c0ff; }
+    .com { color: #8b949e; font-style: italic; }
+    .typ { color: #ffa657; }
+    .op { color: #ff7b72; }
+
+    /* Glyphs Matrix */
+    .glyph-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+      gap: 6px;
+      padding: 1.25rem;
+    }
+
+    .glyph-cell {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 54px;
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      transition: all 0.15s;
+    }
+
+    .glyph-cell:hover {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    .glyph-code {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    /* Download Buttons */
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .dl-btn {
+      background: #1e293b;
+      border: 1px solid var(--accent-cyan);
+      color: #fff;
+      padding: 1rem 1.25rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-family: var(--font-mono);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .dl-btn:hover {
+      background: var(--accent-cyan);
+      color: #000;
+      font-weight: 700;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+    }
+
+    .dl-btn.latin2 {
+      border-color: var(--accent-yellow);
+    }
+
+    .dl-btn.latin2:hover {
+      background: var(--accent-yellow);
+      color: #000;
+      box-shadow: 0 0 20px rgba(255, 184, 0, 0.4);
+    }
+
+    .dl-btn span.badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero-container">
+    <div class="header-badge">PiLAB FONT LABS • v1.0.0</div>
+    <h1>PICODE MONO &amp; LATIN2</h1>
+    <p class="hero-subtitle">
+      A true fixed-pitch, monospaced developer programming font engineered for supreme legibility, terminal workflows, and code clarity. Normalized to 1228 units advance width, with optical horizontal scaling for wide glyphs, continuous box-drawing alignment, and full <strong>Latin-2 (Central European / ISO-8859-2 / CP-1250)</strong> support.
+    </p>
+
+    <div class="meta-pills">
+      <div class="pill">✓ 100% Fixed Pitch (1228 units)</div>
+      <div class="pill">✓ Latin-2 (Hungarian, Polish, Czech, Slovak, Romanian)</div>
+      <div class="pill">✓ Regular 400 &amp; Bold 700</div>
+      <div class="pill">✓ Continuous Underscores (___)</div>
+      <div class="pill">✓ Zero-Gap Box Drawing (┌─┐)</div>
+      <div class="pill">✓ Desktop TTF &amp; Webfont WOFF2 (~41 KB)</div>
+    </div>
+
+    <!-- Controls Panel -->
+    <div class="controls-panel">
+      <div class="control-group">
+        <span class="control-label">Variant</span>
+        <div style="display: flex; gap: 0.5rem;">
+          <button id="btnVarStd" class="btn-toggle active" onclick="setVariant('standard')">PiCode Mono</button>
+          <button id="btnVarLatin2" class="btn-toggle" onclick="setVariant('latin2')">PiCode Mono Latin2</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="control-label">Weight</span>
+        <div style="display: flex; gap: 0.5rem;">
+          <button id="btnRegular" class="btn-toggle active" onclick="setWeight(400)">Regular (400)</button>
+          <button id="btnBold" class="btn-toggle" onclick="setWeight(700)">Bold (700)</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="control-label">Font Size: <span id="sizeVal">18px</span></span>
+        <input type="range" id="sizeSlider" min="12" max="32" value="18" oninput="updateFontSize(this.value)">
+      </div>
+
+      <div class="control-group">
+        <span class="control-label">Line Height: <span id="lhVal">1.6</span></span>
+        <input type="range" id="lhSlider" min="1.0" max="2.2" step="0.1" value="1.6" oninput="updateLineHeight(this.value)">
+      </div>
+
+      <div class="control-group">
+        <span class="control-label">Comparison</span>
+        <button id="btnCompare" class="btn-toggle" onclick="toggleComparison()">Compare with Courier</button>
+      </div>
+    </div>
+
+    <!-- Live Interactive Playground -->
+    <div class="card-block">
+      <div class="card-header">
+        <div class="card-title">
+          <span class="dot"></span> LIVE EDITABLE SCRATCHPAD (TYPE ANYTHING)
+        </div>
+        <span>UTF-8 • FIXED WIDTH</span>
+      </div>
+      <textarea id="playground" class="interactive-textarea" spellcheck="false">
+// PiCode Mono & Latin-2 in Action — 100% Fixed-Pitch Coding Experience!
+package main
+
+import (
+    "fmt"
+    "net/http"
+    "time"
+)
+
+type EdgeGateway struct {
+    ClusterNode string
+    ActiveBans  int
+    LatencyNs   int64
+}
+
+// Notice the Hungarian Latin-2 characters & seamless snake_case underscores:
+// "Árvíztűrő tükörfúrógép" (ő, Ő, ű, Ű, á, é, í, ó, ö, ú, ü)
+func (gw *EdgeGateway) EllenőrizKérést(ügyfél_ip string, kérés_adat []byte) (bool, string) {
+    kezdet := time.Now()
+    defer func() {
+        gw.LatencyNs = time.Since(kezdet).Nanoseconds()
+    }()
+
+    biztonsági_azonosító := fmt.Sprintf("req_%d__cluster__node", time.Now().Unix())
+    
+    // Test operators, brackets, and Central European characters:
+    if len(kérés_adat) > 0 && ügyfél_ip != "127.0.0.1" {
+        return true, "BLOKKOLVA: Anomália pontszám >= 5 (SQLi / XSS észlelve)"
+    }
+    return false, "ENGEDÉLYEZVE: Tiszta hálózati forgalom átengedve."
+}
+      </textarea>
+    </div>
+
+    <!-- Central European / Latin-2 Showcase -->
+    <div class="card-block">
+      <div class="card-header">
+        <div class="card-title">
+          <span class="dot" style="background: var(--accent-yellow);"></span> LATIN-2 (ISO-8859-2 / CP-1250) PANGRAMS &amp; CODE
+        </div>
+        <span>HUNGARIAN • POLISH • CZECH • SLOVAK • ROMANIAN</span>
+      </div>
+      <div class="code-container" style="font-size: 16px;">
+<span class="kw">// 1. Hungarian (Magyar) — Full Hungarian Double Acute (ő, ű, Ő, Ű):</span>
+<span class="str">"Árvíztűrő tükörfúrógép, öntelt sündisznócska, hűsítő fagyifőző üzem."</span>
+<span class="com">AÁ eÉ iÍ oÓ öÖ őŐ uÚ üÜ űŰ — 100% tökéletes sorköz és rácsigazítás!</span>
+
+<span class="kw">// 2. Polish (Polski) — Ogonek, Kreska, Kropka:</span>
+<span class="str">"Stróż pchnął kość w quiz gędźb vel myjń. Zażółć gęślą jaźń."</span>
+<span class="com">aĄ cĆ eĘ lŁ nŃ oÓ sŚ zŹ zŻ — Wyraźne i czytelne w terminalu!</span>
+
+<span class="kw">// 3. Czech &amp; Slovak (Čeština a Slovenčina) — Háček, Kroužek:</span>
+<span class="str">"Příliš žluťoučký kůň úpěl ďábelské ódy. Vypätá dcéra kŕmi štíhlu laň."</span>
+<span class="com">cČ dĎ eĚ lĽ lĹ nŇ rŘ rŔ sŠ tŤ uŮ zŽ — Vynikající fixní šířka!</span>
+
+<span class="kw">// 4. Romanian (Română) — Virguliță &amp; Căciulă:</span>
+<span class="str">"Gheorghe învață programare rapidă, securitate cibernetică și rețele."</span>
+      </div>
+    </div>
+
+    <!-- Box Drawing Terminal Test -->
+    <div class="card-block">
+      <div class="card-header">
+        <div class="card-title">
+          <span class="dot" style="background: var(--accent-cyan);"></span> CLI BOX-DRAWING CONTINUITY TEST (ZERO GAP)
+        </div>
+        <span>UNICODE BOX DRAWING TABLE</span>
+      </div>
+      <div class="code-container" style="color: var(--accent-green);">
+┌──────────────────────────────────────┬──────────────────────┬─────────────┐
+│ KÖZPONTI RENDSZERELEMEK              │ ÁLLAPOT              │ KÉSLELTETÉS │
+├──────────────────────────────────────┼──────────────────────┼─────────────┤
+│ Coraza v3 WAF &amp; OWASP CRS v4         │ AKTÍV (PL 2 SZIGORÚ) │ 0.42 ms     │
+│ Threat Gossip P2P Mesh Busz          │ 3 CSOMÓPONT SZINKRON │ 14.2 ms     │
+│ Linux Kernel nftables Csomageldobás  │ 894 BLOKKOLT IP      │ &lt; 50 ns     │
+│ Kriptográfiai Böngésző PoW Modul     │ ARGON2 / SHA-256     │ 48.0 ms     │
+│ BOLA / IDOR Szekvenciális Őrszem     │ MONOTON SZŰRŐ        │ 0.18 ms     │
+└──────────────────────────────────────┴──────────────────────┴─────────────┘
+      </div>
+    </div>
+
+    <!-- Complete Glyph Matrix -->
+    <div class="card-block">
+      <div class="card-header">
+        <div class="card-title">
+          <span class="dot" style="background: var(--accent-yellow);"></span> GLYPH CHARACTER MAP (ASCII &amp; LATIN-2 EXTENDED)
+        </div>
+        <span>587 NORMALIZED GLYPHS</span>
+      </div>
+      <div class="glyph-grid" id="glyphGrid"></div>
+    </div>
+
+    <!-- Download & Integration -->
+    <div class="card-block" style="padding: 1.5rem;">
+      <h2 style="font-family: var(--font-mono); color: #fff; margin-bottom: 0.5rem;">DOWNLOAD PICODE MONO PACKAGES</h2>
+      <p style="color: var(--text-dim); margin-bottom: 1.5rem;">
+        Compiled desktop font (TTF) and lightweight WOFF2 webfonts for both the standard and dedicated Latin-2 editions.
+      </p>
+
+      <h3 style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--accent-cyan); margin-bottom: 0.5rem;">
+        1. PiCode Mono (Standard Edition):
+      </h3>
+      <div class="download-grid">
+        <a href="fonts/PiCodeMono-Regular.ttf" download class="dl-btn">
+          <div>
+            <div>PiCodeMono-Regular.ttf</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Desktop Font (Regular 400)</div>
+          </div>
+          <span class="badge">TTF 118 KB</span>
+        </a>
+
+        <a href="fonts/PiCodeMono-Bold.ttf" download class="dl-btn">
+          <div>
+            <div>PiCodeMono-Bold.ttf</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Desktop Bold Font (Bold 700)</div>
+          </div>
+          <span class="badge">TTF 119 KB</span>
+        </a>
+
+        <a href="fonts/PiCodeMono-Regular.woff2" download class="dl-btn">
+          <div>
+            <div>PiCodeMono-Regular.woff2</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Webfont Regular</div>
+          </div>
+          <span class="badge">WOFF2 41 KB</span>
+        </a>
+
+        <a href="fonts/PiCodeMono-Bold.woff2" download class="dl-btn">
+          <div>
+            <div>PiCodeMono-Bold.woff2</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Webfont Bold</div>
+          </div>
+          <span class="badge">WOFF2 43 KB</span>
+        </a>
+      </div>
+
+      <h3 style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--accent-yellow); margin-top: 2rem; margin-bottom: 0.5rem;">
+        2. PiCode Mono Latin2 (Dedicated Central European Edition):
+      </h3>
+      <div class="download-grid">
+        <a href="fonts/PiCodeMono-Latin2-Regular.ttf" download class="dl-btn latin2">
+          <div>
+            <div>PiCodeMono-Latin2-Regular.ttf</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Desktop Font (Regular 400)</div>
+          </div>
+          <span class="badge">TTF 118 KB</span>
+        </a>
+
+        <a href="fonts/PiCodeMono-Latin2-Bold.ttf" download class="dl-btn latin2">
+          <div>
+            <div>PiCodeMono-Latin2-Bold.ttf</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Desktop Bold Font (Bold 700)</div>
+          </div>
+          <span class="badge">TTF 119 KB</span>
+        </a>
+
+        <a href="fonts/PiCodeMono-Latin2-Regular.woff2" download class="dl-btn latin2">
+          <div>
+            <div>PiCodeMono-Latin2-Regular.woff2</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Webfont Regular</div>
+          </div>
+          <span class="badge">WOFF2 41 KB</span>
+        </a>
+
+        <a href="fonts/PiCodeMono-Latin2-Bold.woff2" download class="dl-btn latin2">
+          <div>
+            <div>PiCodeMono-Latin2-Bold.woff2</div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">Webfont Bold</div>
+          </div>
+          <span class="badge">WOFF2 43 KB</span>
+        </a>
+      </div>
+
+      <div style="margin-top: 2rem;">
+        <h3 style="font-family: var(--font-mono); font-size: 1rem; color: var(--accent-cyan); margin-bottom: 0.75rem;">
+          VS Code / Cursor Configuration:
+        </h3>
+        <div style="background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; border: 1px solid var(--card-border);">
+          "editor.fontFamily": "'PiCode Mono Latin2', 'PiCode Mono', monospace",<br>
+          "editor.fontSize": 15,<br>
+          "editor.lineHeight": 1.6
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const playground = document.getElementById('playground');
+    let currentVariant = 'standard';
+    let isCompared = false;
+
+    function setVariant(variant) {
+      currentVariant = variant;
+      document.getElementById('btnVarStd').classList.toggle('active', variant === 'standard');
+      document.getElementById('btnVarLatin2').classList.toggle('active', variant === 'latin2');
+      if (!isCompared) {
+        playground.style.fontFamily = variant === 'latin2' 
+          ? "'PiCode Mono Latin2', 'PiCode Mono', monospace" 
+          : "'PiCode Mono', monospace";
+      }
+    }
+
+    function setWeight(weight) {
+      playground.style.fontWeight = weight;
+      document.getElementById('btnRegular').classList.toggle('active', weight === 400);
+      document.getElementById('btnBold').classList.toggle('active', weight === 700);
+    }
+
+    function updateFontSize(val) {
+      playground.style.fontSize = val + 'px';
+      document.getElementById('sizeVal').innerText = val + 'px';
+    }
+
+    function updateLineHeight(val) {
+      playground.style.lineHeight = val;
+      document.getElementById('lhVal').innerText = val;
+    }
+
+    function toggleComparison() {
+      isCompared = !isCompared;
+      const btn = document.getElementById('btnCompare');
+      if (isCompared) {
+        playground.style.fontFamily = "'Courier New', monospace";
+        btn.innerText = 'Switch Back to PiCode Mono';
+        btn.classList.add('active');
+      } else {
+        playground.style.fontFamily = currentVariant === 'latin2'
+          ? "'PiCode Mono Latin2', 'PiCode Mono', monospace"
+          : "'PiCode Mono', monospace";
+        btn.innerText = 'Compare with Courier';
+        btn.classList.remove('active');
+      }
+    }
+
+    // Populate Glyph Grid including Latin-2 characters
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-=[]{}|;:\'",.<>/?`~\\┌─┐└┘├┤┬┴┼' + 
+                  'ÁÉÍÓÖŐÚÜŰáéíóöőúüűĄĆĘŁŃÓŚŹŻąćęłńóśźżČĎĚŇŘŠŤŽŮčďěňřšťžůĂÂÎȘȚăâîșțĐđ';
+    const grid = document.getElementById('glyphGrid');
+    for (let c of chars) {
+      const cell = document.createElement('div');
+      cell.className = 'glyph-cell';
+      cell.innerHTML = `<span>${c}</span><span class="glyph-code">U+${c.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')}</span>`;
+      grid.appendChild(cell);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+/**
+ * PiCode Mono & PiCode Mono Latin2 — Monospaced Developer Programming Font
+ * Engineered by Progressive Innovation LAB (PiLAB)
+ *
+ * Webfont CSS Bundle
+ */
+
+/* ==========================================================================
+   PiCode Mono — Default Family
+   ========================================================================== */
+
+@font-face {
+  font-family: 'PiCode Mono';
+  src: url('../fonts/PiCodeMono-Regular.woff2') format('woff2'),
+       url('../fonts/PiCodeMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PiCode Mono';
+  src: url('../fonts/PiCodeMono-Bold.woff2') format('woff2'),
+       url('../fonts/PiCodeMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   PiCode Mono Latin2 — Dedicated Central European / ISO-8859-2 / CP-1250 Family
+   ========================================================================== */
+
+@font-face {
+  font-family: 'PiCode Mono Latin2';
+  src: url('../fonts/PiCodeMono-Latin2-Regular.woff2') format('woff2'),
+       url('../fonts/PiCodeMono-Latin2-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PiCode Mono Latin2';
+  src: url('../fonts/PiCodeMono-Latin2-Bold.woff2') format('woff2'),
+       url('../fonts/PiCodeMono-Latin2-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   Unicode-Range Fallback (Optional Progressive Loading for Latin Extended)
+   ========================================================================== */
+
+@font-face {
+  font-family: 'PiCode Mono';
+  src: url('../fonts/PiCodeMono-Latin2-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-024F, U+02BA, U+02C7, U+02D8-02DD, U+1E00-1EFF;
+}
+
+@font-face {
+  font-family: 'PiCode Mono';
+  src: url('../fonts/PiCodeMono-Latin2-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-024F, U+02BA, U+02C7, U+02D8-02DD, U+1E00-1EFF;
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+.font-picode-mono {
+  font-family: 'PiCode Mono', 'Courier New', monospace;
+  font-feature-settings: 'calt' 1, 'liga' 1;
+  text-rendering: optimizeLegibility;
+}
+
+.font-picode-mono-latin2 {
+  font-family: 'PiCode Mono Latin2', 'PiCode Mono', 'Courier New', monospace;
+  font-feature-settings: 'calt' 1, 'liga' 1;
+  text-rendering: optimizeLegibility;
+}
